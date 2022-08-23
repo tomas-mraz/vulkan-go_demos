@@ -5,7 +5,7 @@ import (
 	"unsafe"
 
  vk "github.com/vulkan-go/vulkan"
-	"github.com/xlab/linmath"
+	"github.com/tomas-mraz/linmath"
 )
 
 // enableDebug is disabled by default since VK_EXT_debug_report

@@ -1,10 +1,8 @@
-github.com/vulkan-go/asche v0.0.0-20190912134304-d4b318b67e07 h1:QIXP1nx5b+YZt1cKDP5SR/89tRXrLxWslBBFBvH/+Y0=
-github.com/vulkan-go/asche v0.0.0-20190912134304-d4b318b67e07/go.mod h1:fIbNY6YffQRtdF22h26OXRprI/BGOWPKlxJWtNC78OA=
-github.com/vulkan-go/glfw v0.0.0-20190520160600-32f33e359ff2 h1:jPnSXM1EM+6J1MbKbUZvQWkuS6Z9lPWRxTHn1NPsyNY=
-github.com/vulkan-go/glfw v0.0.0-20190520160600-32f33e359ff2/go.mod h1:qui9jo5J26j9fXv2x3bySGThxYkQZt4SgsPIZRtZAbQ=
+github.com/go-gl/glfw/v3.3/glfw v0.0.0-20220806181222-55e207c401ad h1:kX51IjbsJPCvzV9jUoVQG9GEUqIq5hjfYzXTqQ52Rh8=
+github.com/go-gl/glfw/v3.3/glfw v0.0.0-20220806181222-55e207c401ad/go.mod h1:tQ2UAYgL5IevRw8kRxooKSPJfGvJ9fJQFa0TUsXzTg8=
+github.com/tomas-mraz/linmath v1.0.0 h1:TmtsCilRp3heOBd8YpHqbJ7v2h1Rhu/TCH3/N3x2X7I=
+github.com/tomas-mraz/linmath v1.0.0/go.mod h1:Xdf+ILo+Ga5OkHXWwWGXJMkYJLZW7MgYXja0dfdFM/U=
 github.com/vulkan-go/vulkan v0.0.0-20200123094538-aa511c71e200 h1:Gd8JCplUKwEoAx/9s/zL9DQzNdxmWidxd2uM4zVpURw=
 github.com/vulkan-go/vulkan v0.0.0-20200123094538-aa511c71e200/go.mod h1:X6Qqg0j5A5cYHhFXUOl6TL/vYdyh/ajvyCvh+sEHQFI=
-github.com/xlab/closer v0.0.0-20190328110542-03326addb7c2 h1:LPYwXwwHigHHFX3SFa9W9zBIa5reyaLJos2e95eHh68=
-github.com/xlab/closer v0.0.0-20190328110542-03326addb7c2/go.mod h1:Y8IYP9aVODN3Vnw1FCqygCG5IWyYBeBlZqQ5aX+fHFw=
-github.com/xlab/linmath v0.0.0-20170502193301-512668b827be h1:J/lWrXhpS1n3HRy18iqZnIhQqGSrvKnXQpVRNG5rKqM=
-github.com/xlab/linmath v0.0.0-20170502193301-512668b827be/go.mod h1:fgIYDv0Jdzzt+7Us/LdHhBL5N7xqDoj7Jgyf9da1mH4=
+github.com/xlab/closer v1.0.0 h1:2o9/LUpwFzBa1RsHkH+4RPUKLJI6acUW3Go+xi6pOeY=
+github.com/xlab/closer v1.0.0/go.mod h1:Ff8YcUPbn5jju6nClrMCmJHQABM0S/obEK0za/1yVMk=
