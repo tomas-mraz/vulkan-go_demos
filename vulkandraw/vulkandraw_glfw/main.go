@@ -1,12 +1,12 @@
 package main
 
 import (
-	"log"
 	"runtime"
 	"time"
 
 	"github.com/vulkan-go/demos/vulkandraw"
-	"github.com/vulkan-go/glfw/v3.3/glfw"
+    "github.com/go-gl/glfw/v3.3/glfw"
+//	"github.com/vulkan-go/glfw/v3.3/glfw"
 	vk "github.com/vulkan-go/vulkan"
 	"github.com/xlab/closer"
 )
@@ -54,7 +54,6 @@ func main() {
 	}
 
 	v, err = vulkandraw.NewVulkanDevice(appInfo,
-		window.GLFWWindow(),
 		window.GetRequiredInstanceExtensions(),
 		createSurface)
 	orPanic(err)
@@ -68,7 +67,7 @@ func main() {
 	orPanic(err)
 	gfx, err = vulkandraw.CreateGraphicsPipeline(v.Device, s.DisplaySize, r.RenderPass)
 	orPanic(err)
-	log.Println("[INFO] swapchain lengths:", s.SwapchainLen)
+	//log.Println("[INFO] swapchain lengths:", s.SwapchainLen)
 	err = r.CreateCommandBuffers(s.DefaultSwapchainLen())
 	orPanic(err)
 
@@ -77,7 +76,7 @@ func main() {
 	defer closer.Bind(func() {
 		exitC <- struct{}{}
 		<-doneC
-		log.Println("Bye!")
+		//log.Println("Bye!")
 	})
 	vulkandraw.VulkanInit(&v, &s, &r, &b, &gfx)
 

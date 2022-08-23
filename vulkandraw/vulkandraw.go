@@ -2,10 +2,9 @@ package vulkandraw
 
 import (
 	"fmt"
-	"log"
 	"unsafe"
 
-	vk "github.com/vulkan-go/vulkan"
+ vk "github.com/vulkan-go/vulkan"
 	"github.com/xlab/linmath"
 )
 
@@ -146,7 +145,7 @@ func VulkanDrawFrame(v VulkanDeviceInfo,
 		vk.MaxUint64, r.DefaultSemaphore(), vk.NullFence, &nextIdx))
 	if err != nil {
 		err = fmt.Errorf("vk.AcquireNextImage failed with %s", err)
-		log.Println("[WARN]", err)
+		//log.Println("[WARN]", err)
 		return false
 	}
 
@@ -164,7 +163,7 @@ func VulkanDrawFrame(v VulkanDeviceInfo,
 	err = vk.Error(vk.QueueSubmit(v.Queue, 1, submitInfo, r.DefaultFence()))
 	if err != nil {
 		err = fmt.Errorf("vk.QueueSubmit failed with %s", err)
-		log.Println("[WARN]", err)
+		//log.Println("[WARN]", err)
 		return false
 	}
 
@@ -172,7 +171,7 @@ func VulkanDrawFrame(v VulkanDeviceInfo,
 	err = vk.Error(vk.WaitForFences(v.Device, 1, r.fences, vk.True, timeoutNano))
 	if err != nil {
 		err = fmt.Errorf("vk.WaitForFences failed with %s", err)
-		log.Println("[WARN]", err)
+		//log.Println("[WARN]", err)
 		return false
 	}
 
@@ -188,7 +187,7 @@ func VulkanDrawFrame(v VulkanDeviceInfo,
 	err = vk.Error(vk.QueuePresent(v.Queue, &presentInfo))
 	if err != nil {
 		err = fmt.Errorf("vk.QueuePresent failed with %s", err)
-		log.Println("[WARN]", err)
+		//log.Println("[WARN]", err)
 		return false
 	}
 	return true
@@ -257,11 +256,9 @@ func CreateRenderer(device vk.Device, displayFormat vk.Format) (VulkanRenderInfo
 	return r, nil
 }
 
-func NewVulkanDevice(appInfo *vk.ApplicationInfo, window uintptr, instanceExtensions []string, createSurfaceFunc func(interface{}) uintptr) (VulkanDeviceInfo, error) {
+func NewVulkanDevice(appInfo *vk.ApplicationInfo, instanceExtensions []string, createSurfaceFunc func(interface{}) uintptr) (VulkanDeviceInfo, error) {
 	// Phase 1: vk.CreateInstance with vk.InstanceCreateInfo
 
-	existingExtensions := getInstanceExtensions()
-	log.Println("[INFO] Instance extensions:", existingExtensions)
 
 	// instanceExtensions := vk.GetRequiredInstanceExtensions()
 	if enableDebug {
@@ -315,9 +312,6 @@ func NewVulkanDevice(appInfo *vk.ApplicationInfo, window uintptr, instanceExtens
 		vk.DestroyInstance(v.Instance, nil)
 		return v, err
 	}
-
-	existingExtensions = getDeviceExtensions(v.gpuDevices[0])
-	log.Println("[INFO] Device extensions:", existingExtensions)
 
 	// Phase 3: vk.CreateDevice with vk.DeviceCreateInfo (a logical device)
 
@@ -379,7 +373,7 @@ func NewVulkanDevice(appInfo *vk.ApplicationInfo, window uintptr, instanceExtens
 		err = vk.Error(vk.CreateDebugReportCallback(v.Instance, &dbgCreateInfo, nil, &dbg))
 		if err != nil {
 			err = fmt.Errorf("vk.CreateDebugReportCallback failed with %s", err)
-			log.Println("[WARN]", err)
+			//log.Println("[WARN]", err)
 			return v, nil
 		}
 		v.dbg = dbg
@@ -423,11 +417,11 @@ func dbgCallbackFunc(flags vk.DebugReportFlags, objectType vk.DebugReportObjectT
 
 	switch {
 	case flags&vk.DebugReportFlags(vk.DebugReportErrorBit) != 0:
-		log.Printf("[ERROR %d] %s on layer %s", messageCode, pMessage, pLayerPrefix)
+		//log.Printf("[ERROR %d] %s on layer %s", messageCode, pMessage, pLayerPrefix)
 	case flags&vk.DebugReportFlags(vk.DebugReportWarningBit) != 0:
-		log.Printf("[WARN %d] %s on layer %s", messageCode, pMessage, pLayerPrefix)
+		//log.Printf("[WARN %d] %s on layer %s", messageCode, pMessage, pLayerPrefix)
 	default:
-		log.Printf("[WARN] unknown debug message %d (layer %s)", messageCode, pLayerPrefix)
+		//log.Printf("[WARN] unknown debug message %d (layer %s)", messageCode, pLayerPrefix)
 	}
 	return vk.Bool32(vk.False)
 }
@@ -470,7 +464,7 @@ func (v *VulkanDeviceInfo) CreateSwapchain() (VulkanSwapchainInfo, error) {
 	formats := make([]vk.SurfaceFormat, formatCount)
 	vk.GetPhysicalDeviceSurfaceFormats(gpu, v.Surface, &formatCount, formats)
 
-	log.Println("[INFO] got", formatCount, "physical device surface formats")
+	//log.Println("[INFO] got", formatCount, "physical device surface formats")
 
 	chosenFormat := -1
 	for i := 0; i < int(formatCount); i++ {
@@ -662,7 +656,7 @@ func (v VulkanDeviceInfo) CreateBuffers() (VulkanBufferInfo, error) {
 	vk.MapMemory(v.Device, deviceMemory, 0, vk.DeviceSize(vertexData.Sizeof()), 0, &data)
 	n := vk.Memcopy(data, vertexData.Data())
 	if n != vertexData.Sizeof() {
-		log.Println("[WARN] failed to copy vertex buffer data")
+		//log.Println("[WARN] failed to copy vertex buffer data")
 	}
 	vk.UnmapMemory(v.Device, deviceMemory)
 

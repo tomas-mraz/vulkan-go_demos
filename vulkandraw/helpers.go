@@ -2,7 +2,6 @@ package vulkandraw
 
 import (
 	"fmt"
-	"log"
 	"strings"
 	"unsafe"
 
@@ -11,7 +10,6 @@ import (
 
 func check(ret vk.Result, name string) bool {
 	if err := vk.Error(ret); err != nil {
-		log.Println("[WARN]", name, "failed with", err)
 		return true
 	}
 	return false
