@@ -2,10 +2,11 @@ package vulkandraw
 
 import (
 	"fmt"
+	"log"
 	"unsafe"
 
- vk "github.com/vulkan-go/vulkan"
 	"github.com/tomas-mraz/linmath"
+	vk "github.com/vulkan-go/vulkan"
 )
 
 // enableDebug is disabled by default since VK_EXT_debug_report
@@ -256,9 +257,11 @@ func CreateRenderer(device vk.Device, displayFormat vk.Format) (VulkanRenderInfo
 	return r, nil
 }
 
-func NewVulkanDevice(appInfo *vk.ApplicationInfo, instanceExtensions []string, createSurfaceFunc func(interface{}) uintptr) (VulkanDeviceInfo, error) {
+func NewVulkanDevice(appInfo *vk.ApplicationInfo, window uintptr, instanceExtensions []string, createSurfaceFunc func(interface{}) uintptr) (VulkanDeviceInfo, error) {
 	// Phase 1: vk.CreateInstance with vk.InstanceCreateInfo
 
+	existingExtensions := getInstanceExtensions()
+	log.Println("[INFO] Instance extensions:", existingExtensions)
 
 	// instanceExtensions := vk.GetRequiredInstanceExtensions()
 	if enableDebug {
@@ -507,13 +510,13 @@ func (v *VulkanDeviceInfo) CreateSwapchain() (VulkanSwapchainInfo, error) {
 		Clipped:               vk.False,
 	}
 	s.Swapchains = make([]vk.Swapchain, 1)
-	err = vk.Error(vk.CreateSwapchain(v.Device, &swapchainCreateInfo, nil, &s.Swapchains[0]))
+	err = vk.Error(vk.CreateSwapchain(v.Device, &swapchainCreateInfo, nil, &(s.Swapchains[0])))
 	if err != nil {
 		err = fmt.Errorf("vk.CreateSwapchain failed with %s", err)
 		return s, err
 	}
 	s.SwapchainLen = make([]uint32, 1)
-	err = vk.Error(vk.GetSwapchainImages(v.Device, s.DefaultSwapchain(), &s.SwapchainLen[0], nil))
+	err = vk.Error(vk.GetSwapchainImages(v.Device, s.DefaultSwapchain(), &(s.SwapchainLen[0]), nil))
 	if err != nil {
 		err = fmt.Errorf("vk.GetSwapchainImages failed with %s", err)
 		return s, err

@@ -1,14 +1,12 @@
 package main
 
 import (
-	"runtime"
-	"time"
-
-	"github.com/vulkan-go/demos/vulkandraw"
-    "github.com/go-gl/glfw/v3.3/glfw"
-//	"github.com/vulkan-go/glfw/v3.3/glfw"
+	"github.com/go-gl/glfw/v3.3/glfw"
 	vk "github.com/vulkan-go/vulkan"
 	"github.com/xlab/closer"
+	"runtime"
+	"simple-vulkan-app/vulkandraw"
+	"time"
 )
 
 var appInfo = &vk.ApplicationInfo{
@@ -54,6 +52,7 @@ func main() {
 	}
 
 	v, err = vulkandraw.NewVulkanDevice(appInfo,
+		uintptr(window.Handle()),
 		window.GetRequiredInstanceExtensions(),
 		createSurface)
 	orPanic(err)
