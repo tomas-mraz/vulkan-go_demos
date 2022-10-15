@@ -10,12 +10,12 @@ project:
     # command "android-project" require installation:
     # go get github.com/xlab/treeprint
     # go get github.com/jawher/mow.cli
-    # go install github.com/xlab/android-go/cmd/android-project
+    # go install github.com/xlab/android-go/cmd/android-project@latest
 
-	android-project update --target android-23 --name VulkanDraw --path .
+	android-project update --target android-26 --force --name VulkanDraw --path .
 
 project-n:
-	android-project update --target android-N --name VulkanDraw --path .
+	android-project update --target android-N --force --name VulkanDraw --path .
 
 clean:
 	rm -rf libs obj bin gen jni/lib

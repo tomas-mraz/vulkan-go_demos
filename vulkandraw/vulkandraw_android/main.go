@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"vulkandraw"
+	"github.com/vulkan-go/demos/vulkandraw"
 	vk "github.com/vulkan-go/vulkan"
 	"github.com/xlab/android-go/android"
 	"github.com/xlab/android-go/app"
@@ -67,7 +67,7 @@ func main() {
 				case app.NativeWindowCreated:
 					err := vk.Init()
 					orPanic(err)
-					v, err = vulkandraw.NewVulkanDevice(appInfo, event.Window.Ptr())
+					v, err = vulkandraw.NewVulkanDevice(appInfo, event.Window.Ptr(), nil, nil)
 					orPanic(err)
 					s, err = v.CreateSwapchain()
 					orPanic(err)
