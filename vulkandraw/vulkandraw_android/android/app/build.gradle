@@ -1,0 +1,84 @@
+plugins {
+	id 'com.android.application'
+}
+
+android {
+    namespace 'org.golang.android.vulkan.draw'
+	compileSdk 26
+	buildToolsVersion '33.0.0'
+	ndkVersion '25.1.8937393'
+
+	defaultConfig {
+		applicationId "org.golang.android.vulkan.draw"
+		minSdk 26
+		//noinspection ExpiredTargetSdkVersion
+		targetSdk 26
+		versionCode 1
+		versionName "1.0"
+
+		externalNativeBuild {
+			cmake {
+				abiFilters.addAll( 'arm64-v8a', 'armeabi-v7a' )
+//				arguments '-DANDROID_TOOLCHAIN=clang', '-DANDROID_STL=c++_static', '-DVKB_VALIDATION_LAYERS=OFF'
+			}
+		}
+	}
+
+	buildTypes {
+		debug {
+			debuggable true
+			jniDebuggable true
+			minifyEnabled false
+		}
+
+		release {
+			debuggable false
+			jniDebuggable false
+			minifyEnabled false
+//			signingConfig debug.signingConfig
+		}
+	}
+
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_1_8
+		targetCompatibility JavaVersion.VERSION_1_8
+	}
+
+	sourceSets {
+        main.assets.srcDirs = ['assets']
+		main {
+//          res.srcDirs += [ '../../../app/android/res' ]
+//			java.srcDirs += [ '../../../app/android/java' ]
+//			manifest.srcFile '../../../app/android/AndroidManifest.xml'
+			jniLibs.srcDirs += ["$ndkDirectory/sources/third_party/vulkan/src/build-android/jniLibs"]
+		}
+	}
+	externalNativeBuild {
+		cmake {
+//			version "3.18.4"
+			path 'CMakeLists.txt'
+			buildStagingDirectory 'build-native'
+		} 
+	}
+
+	buildFeatures {
+		viewBinding true
+	}
+
+	lint {
+		abortOnError false
+		checkReleaseBuilds false
+	}
+
+	dependenciesInfo {
+		includeInApk true
+		includeInBundle true
+	}
+}
+/*
+dependencies {
+	implementation 'androidx.appcompat:appcompat:1.5.1'
+	implementation 'com.google.android.material:material:1.7.0'
+	implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+}
+*/

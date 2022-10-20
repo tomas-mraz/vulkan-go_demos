@@ -1,27 +1,23 @@
-OS=linux
-ANDROID_API ?= 23
-ANDROID_TOOLCHAIN_DIR ?= $(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/$(OS)-x86_64/bin
-
-all: build apk
+OPERATING_SYSTEM ?= linux
+ANDROID_API ?= 26
+ANDROID_TOOLCHAIN_DIR ?= $(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/$(OPERATING_SYSTEM)-x86_64
 
 build:
-	mkdir -p android/jni/lib
-	CC="$(ANDROID_TOOLCHAIN_DIR)/aarch64-linux-android$(ANDROID_API)-clang" \
-	CXX="$(ANDROID_TOOLCHAIN_DIR)/aarch64-linux-android$(ANDROID_API)-clang++" \
+	CC="$(ANDROID_TOOLCHAIN_DIR)/bin/armv7a-linux-androideabi$(ANDROID_API)-clang" \
+	CXX="$(ANDROID_TOOLCHAIN_DIR)/bin/armv7a-linux-androideabi$(ANDROID_API)-clang++" \
+	GOOS=android \
+	GOARCH=arm \
+	CGO_ENABLED=1 \
+	go build -buildmode=c-shared -o android/app/src/main/jniLibs/armeabi-v7a/libvulkandraw.so
+
+build64:
+	CC="$(ANDROID_TOOLCHAIN_DIR)/bin/aarch64-linux-android$(ANDROID_API)-clang" \
+	CXX="$(ANDROID_TOOLCHAIN_DIR)/bin/aarch64-linux-android$(ANDROID_API)-clang++" \
 	GOOS=android \
 	GOARCH=arm64 \
 	CGO_ENABLED=1 \
-	go build -buildmode=c-shared -o android/jni/lib/libvulkandraw.so
- 
-apk:
-	cd android && make
+	go build -buildmode=c-shared -o android/app/src/main/jniLibs/arm64-v8a/libvulkandraw.so
 
-clean:
-	cd android && make clean
-
-install:
-	cd android && make install
-
-listen:
-	adb logcat -c
-	adb logcat *:S VulkanDraw
+xxx:
+	echo notes
+#	cp "$(ANDROID_TOOLCHAIN_DIR)/sysroot/usr/lib/arm-linux-androideabi/26/libvulkan.so" "./android/app/src/main/jniLibs/armeabi-v7a/"

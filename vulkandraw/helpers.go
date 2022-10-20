@@ -6,7 +6,7 @@ import (
 	"strings"
 	"unsafe"
 
-	vk "github.com/vulkan-go/vulkan"
+	vk "github.com/tomas-mraz/vulkan-go_vulkan"
 )
 
 func check(ret vk.Result, name string) bool {
