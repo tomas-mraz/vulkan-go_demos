@@ -9,6 +9,34 @@ import (
 	vk "github.com/vulkan-go/vulkan"
 )
 
+// Error handling
+func MustSucceed(result vk.Result) {
+	err := vk.Error(result)
+	if err != nil {
+		fmt.Println("[ERROR] ", err)
+		panic(err)
+	}
+}
+
+// To C Strings
+func ToCString(input string) string {
+	l := len(input)
+	if l == 0 {
+		return "\x00"
+	} else if input[l-1] != '\x00' {
+		return fmt.Sprintf("%s\x00", input)
+	}
+	return input
+}
+
+func ToCStrings(input []string) []string {
+	a := make([]string, len(input))
+	for k, v := range input {
+		a[k] = ToCString(v)
+	}
+	return a
+}
+
 func check(ret vk.Result, name string) bool {
 	if err := vk.Error(ret); err != nil {
 		log.Println("[WARN]", name, "failed with", err)
